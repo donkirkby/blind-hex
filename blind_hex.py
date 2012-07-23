@@ -39,6 +39,27 @@ def writeText(c, text, x, y, r, theta):
     c.rotate(-theta)
     c.translate(-x, -y)
 
+def writeEdge(c, ticks, x, y, r, theta):
+    xscale = 1/4.0
+    yscale = 1.0
+    c.translate(x, y)
+    c.rotate(theta)
+    c.translate(r, 0)
+    c.line(0, 0.6*r, 0, -0.6*r)
+    crosses = min(ticks, 4)
+    for i in range(crosses):
+        sign = 1 - 2*(i%2)
+        centering = ((crosses+1)%2)*0.1*r
+        height = sign*((i+1)/2)*0.2*r + centering
+        c.line(-.1*r, height, .1*r, height)
+    if ticks == 5:
+        c.line(-.1*r, -0.4*r, .1*r, 0.4*r)
+    c.scale(xscale, yscale)
+    c.scale(1/xscale, 1/yscale)
+    c.translate(-r, 0)
+    c.rotate(-theta)
+    c.translate(-x, -y)
+
 def writeLine(c, x, y, r, theta):
     c.translate(x, y)
     c.rotate(theta)
@@ -51,11 +72,11 @@ def writeLine(c, x, y, r, theta):
 def writeHexagon(c, j, x, y, r, skipped_lines):
     for side in range(6):
         theta = side * 60
-        writeText(c, str(j), x, y, r, theta + 30)
+#        writeText(c, str(j), x, y, r, theta + 30)
+        writeEdge(c, j, x, y, r, theta + 30)
         if side not in skipped_lines:
             writeLine(c, x, y, r*1.16, theta)
     
-
 c = canvas.Canvas("blind-hex.pdf")
 c.translate(-1*inch, -.75*inch)
 c.scale(.925, .925)
