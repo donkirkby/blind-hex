@@ -80,7 +80,32 @@ for j in range(2):
     c.rotate(180)
     for i in range(5):
         c.drawString((i*0.75-2)*inch-xoffset, -3*inch-yoffset, str(i+1))
-    
+c.translate(-xoffset, -yoffset)
+
+for i in range(size*2-1):
+    if i < size*2-2:
+        c.drawString(1.4*inch, (1.03+0.75*i)*inch, "x")
+    if i > 0:
+        c.rotate(30)
+        c.translate(-.75*2*size*inch, 0)
+        c.rotate(-30)
+        c.drawString(1.6*inch, (1.03+0.75*i)*inch, "x")
+        c.rotate(30)
+        c.translate(.75*2*size*inch, 0)
+        c.rotate(-30)
+
+xoffset = 0.8*inch
+c.translate(xoffset, 0)
+for i in range(size*2-1):
+    if i < size*2-2:
+        c.drawString(0, 0, "o")
+    if i > 0:
+        c.drawString(0.09*inch, (2*size*0.75 - .2)*inch, "o")
+    c.rotate(30)
+    c.translate(-.75*inch, 0)
+    c.rotate(-30)
+c.translate(-xoffset, 0)
+
 c.showPage()
 c.save()
 
