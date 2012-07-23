@@ -23,7 +23,7 @@ def skipped_lines(i, j, size):
 def writeText(c, text, x, y, r, theta):
     xscale = 1/4.0
     yscale = 1.0
-    c.setFont("Courier", r/.75)
+    c.setFont("Courier-Bold", r/.75)
     c.translate(x, y)
     c.rotate(theta)
     c.translate(r, 0)
@@ -73,6 +73,7 @@ for i in range(size):
                      .375*inch,
                      skipped_lines(i, j, size))
 
+c.setFont("Courier", .375*inch/0.75)
 xoffset = -2.3*inch
 yoffset = 2.6*inch
 c.translate(xoffset, yoffset)
