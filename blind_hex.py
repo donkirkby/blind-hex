@@ -98,10 +98,11 @@ c.setFont("Courier", .375*inch/0.75)
 xoffset = -2.3*inch
 yoffset = 2.6*inch
 c.translate(xoffset, yoffset)
-for j in range(2):
+for player in 'ox':
     c.rotate(180)
     for i in range(5):
         c.drawString((i*0.75-2)*inch-xoffset, -3*inch-yoffset, str(i+1))
+        c.drawString((i*0.75-2)*inch-xoffset, -2.5*inch-yoffset, player)
 c.translate(-xoffset, -yoffset)
 
 for i in range(size*2-1):
