@@ -1,17 +1,14 @@
-Blind Hex
-=========
-
 Number of Players: 2
 
 Goal: Connect two opposite sides of the board with a continuous chain of 
 letters.
 
 Equipment: 4 pennies, 2 pencils, and a copy of the board
-
 <!-- The board is included with [the PDF version of the rules](1) skip -->
+
 Blind Hex is a variant of Hex that uses simultaneous movement like that used in 
 Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently 
-designed in 1947 by John Nash. [Nibelungenlied][2] was designed by Richard 
+designed by John Nash in 1947. [Nibelungenlied][2] was designed by Richard 
 Vickery in 2003.
 
 [Blind Hex][3] is [CC-BY-SA][4] Don Kirkby, 2012.
