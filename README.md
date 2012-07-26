@@ -10,11 +10,11 @@ Equipment: 4 pennies, 2 pencils, and a copy of the board
 
 <!-- The board is included with [the PDF version of the rules](1) skip -->
 Blind Hex is a variant of Hex that uses simultaneous movement like that used in 
-Niebelungenlied. [Hex](1) was designed by Piet Hein in 1942, and independently 
-designed in 1947 by John Nash. [Nibelungenlied](2) was designed by Richard 
+Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently 
+designed in 1947 by John Nash. [Nibelungenlied][2] was designed by Richard 
 Vickery in 2003.
 
-Blind Hex is [CC-BY-SA](3) Don Kirkby, 2012.
+[Blind Hex][3] is [CC-BY-SA][4] Don Kirkby, 2012.
 
 Set Up
 ======
@@ -77,4 +77,5 @@ sides labelled with o's to each other.
 
 [1]: http://www.boardgamegeek.com/boardgame/4112/hex
 [2]: http://boardgamegeek.com/boardgame/7555/nibelungenlied
-[3]: http://creativecommons.org/licenses/by-sa/3.0/
+[3]: http://donkirkby.github.com/blind-hex/
+[4]: http://creativecommons.org/licenses/by-sa/3.0/
