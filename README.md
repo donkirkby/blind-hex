@@ -3,7 +3,7 @@ Number of Players: 2
 Goal: Connect two opposite sides of the board with a continuous chain of 
 letters.
 
-Equipment: 4 pennies, 2 pencils, and a copy of the board
+Equipment: a deck of cards, 2 pencils, and a copy of the board
 <!-- The board is included with [the PDF version of the rules](1) skip -->
 
 Blind Hex is a variant of Hex that uses simultaneous movement like that used in 
@@ -11,44 +11,37 @@ Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently
 designed by John Nash in 1947. [Nibelungenlied][2] was designed by Richard 
 Vickery in 2003.
 
-[Blind Hex][3] is [CC-BY-SA][4] Don Kirkby, 2012.
+[Blind Hex][3] is [CC-BY-SA][4] Don Kirkby, 2012. Special thanks to playtesters
+Sheila, Eliza, and Lana.
 
 Set Up
 ======
 
-Players choose who will play "x" and who will play "o". The board has the 
-numbers from one to five at each end. One set has x's above it, and the other 
-has o's. Turn the board so the x's are facing the "x" player and the o's are 
-facing the "o" player.
-
-Flip a coin and call it. The loser places two pennies on any two of his numbers. 
-The winner places two pennies on any two of her letters.
+Players choose who will play "x" and who will play "o". The "x" player takes
+the A, 2, 3, 4, 5 of diamonds as her hand, and the "o" player takes the 
+A, 2, 3, 4, 5 of clubs as his hand. The remaining deck is shuffled and the 
+players cut for high card. The losing player must take two cards from her hand
+and place them face up on the table, off to the side.  
 
 Play
 ====
 
 Each turn, each player tries to write his letter in two spaces that will help 
-him connect his two sides of the board. The player chooses numbers that affect 
+him connect his two sides of the board. The player chooses cards that affect 
 which spaces he can write in.
 
-Step 1 - Choose Numbers
------------------------
+Step 1 - Choose Cards
+---------------------
 
-Each player secretly chooses two different numbers between one and five. The 
-player with pennies over two numbers cannot choose the covered numbers, but the 
-other player can choose any numbers. Both players put their hands behind their 
-backs, put out fingers to match their two numbers, and then both players show 
-their hands at the same time. Each player then moves their pennies to the new 
-numbers. The pennies move between covering numbers and covering letters, so that 
-the player who only had three numbers to choose from will have five numbers to 
-choose from next turn.
+Players choose two cards each from their hands and both reveal their cards at
+the same time. Aces are treated as the number one.
 
 Step 2 - Write Letters
 ----------------------
 
-Based on the chosen numbers, the players see where they can write their letters.
+Based on the chosen cards, the players see where they can write their letters.
 
-If both players chose the same two numbers, they write no letters, and the turn 
+If both players chose the same two numbers, they write no letters, and the turn
 is over.
 
 If they choose four different numbers, then each player writes one letter for 
@@ -65,12 +58,19 @@ example, if Pat chose one and two, and Chris chose two and three, then Pat
 writes in two spaces using the number one, and Chris writes in two spaces using 
 the number three.
 
+Step 3 - Pick Up Cards
+----------------------
+
+The player who has four cards on the table puts them all back in her hand. The
+other player should have two cards on the table, and moves them off to the side.
+
 Winning
 =======
-The "x" player wins by writing the letter "x" in a continuous chain of spaces 
-that connect the two sides labelled with x's to each other. The "o" player wins 
-by writing the letter "o" in a continuous chain of spaces that connect the two 
-sides labelled with o's to each other.
+The left and right sides are labelled with x's, and the "x" player wins by
+writing the letter "x" in an unbroken chain of spaces from the left side to the
+right side of the board. The top and bottom are labelled with o's and the "o" 
+player wins by writing the letter "o" in an unbroken chain of spaces from the 
+top to the bottom of the board.
 
 [1]: http://www.boardgamegeek.com/boardgame/4112/hex
 [2]: http://boardgamegeek.com/boardgame/7555/nibelungenlied

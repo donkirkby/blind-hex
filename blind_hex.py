@@ -1,4 +1,5 @@
 from subprocess import call
+import re
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.platypus.flowables import Flowable, PageBreak
@@ -25,25 +26,6 @@ class GameBoard(Flowable):
         elif j == size - 1:
             skipped_lines.append(2)
         return skipped_lines
-    
-    def writeText(self, c, text, x, y, r, theta):
-        xscale = 1/4.0
-        yscale = 1.0
-        c.setFont("Courier-Bold", r/.75)
-        c.translate(x, y)
-        c.rotate(theta)
-        c.translate(r, 0)
-        c.line(0, 0.4*r, 0, 0.6*r)
-        c.line(0, -0.4*r, 0, -0.6*r)
-        c.scale(xscale, yscale)
-        xoffset = -.305
-        if text == "4":
-            xoffset = -.38
-        c.drawString(xoffset*r/.75, -.3*r/.75, text)
-        c.scale(1/xscale, 1/yscale)
-        c.translate(-r, 0)
-        c.rotate(-theta)
-        c.translate(-x, -y)
     
     def writeEdge(self, c, ticks, x, y, r, theta):
         xscale = 1/4.0
@@ -102,16 +84,6 @@ class GameBoard(Flowable):
                              self.skipped_lines(i, j, size))
     
         c.setFont("Courier", .375*inch/0.75)
-        xoffset = -2.3*inch
-        yoffset = 2.6*inch
-        c.translate(xoffset, yoffset)
-        for player in 'ox':
-            c.rotate(180)
-            for i in range(5):
-                c.drawString((i*0.75-2)*inch-xoffset, -3*inch-yoffset, str(i+1))
-                c.drawString((i*0.75-2)*inch-xoffset, -2.5*inch-yoffset, player)
-        c.translate(-xoffset, -yoffset)
-        
         for i in range(size*2-1):
             if i < size*2-2:
                 c.drawString(1.4*inch, (1.03+0.75*i)*inch, "x")
@@ -141,6 +113,7 @@ def go():
     styles = getSampleStyleSheet()
     story = [Paragraph('Blind Hex', styles['Title'])]
     f = open('README.md')
+    links = {}
     text = ''
     for line in f.readlines():
         line = line.strip()
@@ -153,12 +126,36 @@ def go():
         else:
             style_name = None
         if style_name:
-            story.append(Paragraph(text, styles[style_name]))
-            text = ''
+                story.append(Paragraph(text, styles[style_name]))
+                text = ''
         else:
-            if text:
-                text += ' '
-            text += line
+            match = re.match(r'^\s*\[(.+)\]:\s*(.*)$', line)
+            if match:
+                links[match.group(1)] = match.group(2)
+            else:
+                if text:
+                    text += ' '
+                text += line
+    if text:
+        raise RuntimeError('No blank line found at end of file.')
+    for i in range(len(story)):
+        p = story[i]
+        replacement = ''
+        index = 0
+        for match in re.finditer(r'\[([^\]]+)\]\[([^\]]+)\]', p.text):
+            block = p.text[index:match.start()]
+            if block.startswith(' '):
+                block = '&nbsp;' + block[1:]
+            replacement += block
+            link = links[match.group(2)]
+            replacement += '<a href="%s"><u>%s</u></a>' % (link, match.group(1))
+            index = match.end()
+        if replacement:
+            block = p.text[index:]
+            if block.startswith(' '):
+                block = '&nbsp;' + block[1:]
+            replacement += block
+            story[i] = Paragraph(replacement, p.style)
     story.append(PageBreak())
     story.append(GameBoard())
     doc.build(story)
