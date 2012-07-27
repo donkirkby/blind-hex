@@ -133,7 +133,7 @@ def go():
             match = re.match(r'^\s*\[(.+)\]:\s*(.*)$', line)
             if match:
                 links[match.group(1)] = match.group(2)
-            elif re.search(r'<!--\s*skip\s*-->\s*$', line):
+            elif re.search(r'PDF', line):
                 text = '' # skip this paragraph
             else:
                 if text:

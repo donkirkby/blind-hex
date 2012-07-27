@@ -5,7 +5,7 @@ letters.
 
 Equipment: a deck of cards, 2 pencils, and a copy of the board
 
-The board is included with [the PDF version of the rules][5]. <!-- skip -->
+The board is included with [the PDF version of the rules][5].
 
 Blind Hex is a variant of Hex that uses simultaneous movement like that used in 
 Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently 
