@@ -4,7 +4,8 @@ Goal: Connect two opposite sides of the board with a continuous chain of
 letters.
 
 Equipment: a deck of cards, 2 pencils, and a copy of the board
-<!-- The board is included with [the PDF version of the rules](1) skip -->
+
+The board is included with [the PDF version of the rules][5]. <!-- skip -->
 
 Blind Hex is a variant of Hex that uses simultaneous movement like that used in 
 Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently 
@@ -76,3 +77,4 @@ top to the bottom of the board.
 [2]: http://boardgamegeek.com/boardgame/7555/nibelungenlied
 [3]: http://donkirkby.github.com/blind-hex/
 [4]: http://creativecommons.org/licenses/by-sa/3.0/
+[5]: http://github.com/downloads/donkirkby/blind-hex/blind-hex.pdf

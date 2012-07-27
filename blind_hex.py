@@ -2,7 +2,7 @@ from subprocess import call
 import re
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph
-from reportlab.platypus.flowables import Flowable, PageBreak
+from reportlab.platypus.flowables import Flowable, PageBreak, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 
@@ -125,21 +125,24 @@ def go():
             style_name = 'Normal'
         else:
             style_name = None
-        if style_name:
+        if style_name and text:
                 story.append(Paragraph(text, styles[style_name]))
+                story.append(Spacer(1,0.055*inch))
                 text = ''
         else:
             match = re.match(r'^\s*\[(.+)\]:\s*(.*)$', line)
             if match:
                 links[match.group(1)] = match.group(2)
+            elif re.search(r'<!--\s*skip\s*-->\s*$', line):
+                text = '' # skip this paragraph
             else:
                 if text:
                     text += ' '
                 text += line
     if text:
         raise RuntimeError('No blank line found at end of file.')
-    for i in range(len(story)):
-        p = story[i]
+    for i in range(len(story)/2):
+        p = story[i*2+1]
         replacement = ''
         index = 0
         for match in re.finditer(r'\[([^\]]+)\]\[([^\]]+)\]', p.text):
@@ -155,7 +158,7 @@ def go():
             if block.startswith(' '):
                 block = '&nbsp;' + block[1:]
             replacement += block
-            story[i] = Paragraph(replacement, p.style)
+            story[i*2+1] = Paragraph(replacement, p.style)
     story.append(PageBreak())
     story.append(GameBoard())
     doc.build(story)
