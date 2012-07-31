@@ -5,6 +5,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.platypus.flowables import Flowable, PageBreak, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
+from reportlab.rl_config import defaultPageSize
+PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
 
 class GameBoard(Flowable):
     def wrap(self, *args):
@@ -108,6 +110,14 @@ class GameBoard(Flowable):
             c.rotate(-30)
         c.translate(-xoffset, 0)
 
+def firstPage(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Times-Roman', 9)
+    canvas.drawCentredString(PAGE_WIDTH/2, 
+                             0.75 * inch, 
+                             "donkirkby.github.com/blind-hex")
+    canvas.restoreState()
+
 def go():
     doc = SimpleDocTemplate("blind-hex.pdf")
     styles = getSampleStyleSheet()
@@ -147,11 +157,9 @@ def go():
         index = 0
         for match in re.finditer(r'\[([^\]]+)\]\[([^\]]+)\]', p.text):
             block = p.text[index:match.start()]
-            if block.startswith(' '):
-                block = '&nbsp;' + block[1:]
             replacement += block
             link = links[match.group(2)]
-            replacement += '<a href="%s"><u>%s</u></a>' % (link, match.group(1))
+            replacement += '<a href="%s">%s</a>' % (link, match.group(1))
             index = match.end()
         if replacement:
             block = p.text[index:]
@@ -161,7 +169,7 @@ def go():
             story[i*2+1] = Paragraph(replacement, p.style)
     story.append(PageBreak())
     story.append(GameBoard())
-    doc.build(story)
+    doc.build(story, onFirstPage=firstPage)
 
 go()
 

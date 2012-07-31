@@ -1,9 +1,8 @@
 Number of Players: 2
 
-Goal: Connect two opposite sides of the board with a continuous chain of 
-letters.
+Goal: connect opposite sides of the board with a chain of letters.
 
-Equipment: a deck of cards, 2 pencils, and a copy of the board
+Equipment: a deck of cards, 2 pencils, and a copy of the board.
 
 The board is included with [the PDF version of the rules][5].
 
@@ -12,7 +11,7 @@ Niebelungenlied. [Hex][1] was designed by Piet Hein in 1942, and independently
 designed by John Nash in 1947. [Nibelungenlied][2] was designed by Richard 
 Vickery in 2003.
 
-[Blind Hex][3] is [CC-BY-SA][4] Don Kirkby, 2012. Special thanks to playtesters
+Blind Hex is [CC-BY-SA][4] Don Kirkby, 2012. Special thanks to playtesters
 Sheila, Eliza, and Lana.
 
 Set Up
@@ -75,6 +74,5 @@ top to the bottom of the board.
 
 [1]: http://www.boardgamegeek.com/boardgame/4112/hex
 [2]: http://boardgamegeek.com/boardgame/7555/nibelungenlied
-[3]: http://donkirkby.github.com/blind-hex/
 [4]: http://creativecommons.org/licenses/by-sa/3.0/
 [5]: http://github.com/downloads/donkirkby/blind-hex/blind-hex.pdf
