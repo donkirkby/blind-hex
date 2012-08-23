@@ -1,22 +1,23 @@
-from math import sin, pi
+from math import atan, pi, sin, sqrt
 
 #echo on
-#echo width 40
+#echo width 60
 #echo scroll 50
 #echo turtle
 
-class GameBoard:
+class Board:
     def __init__(self, t):
         self.t = t
+        self.scale = 1.0
     
     def draw(self):
         t = self.t
         count = 11
         height = t.window_height()
         width = t.window_width()
-        d1 = height*.97 / (count * 1.5)
+        d1 = height / (count * 1.5)
         d2 = width / count
-        d = min(d1, d2)
+        d = min(d1, d2) * self.scale
         t.penup()
         t.right(90)
         t.fd(d * (count-1)/2)
@@ -24,6 +25,7 @@ class GameBoard:
         t.fd(d * (count-1)/2)
         t.left(150)
         t.pendown()
+        labels = [5, 1, 3, 4, 2, 5]
         for i in range(count/2 + 1):
             for j in range(count/2 + 1):
                 skip_headings = []
@@ -37,7 +39,9 @@ class GameBoard:
                     skip_headings.append(120)
                 if len(skip_headings) == 2:
                     skip_headings.append(sum(skip_headings)/2)
-                self.hexagon(d, skip_headings)
+                self.hexagon(d, 
+                             labels[(j-i+10)%5], 
+                             skip_headings)
                 t.penup()
                 t.left(90)
                 t.fd(2*d)
@@ -53,30 +57,54 @@ class GameBoard:
             t.pendown()
 
 
-    def tick(self, t, ticksize):
-        t.left(90)
+    def tick(self, t, tick_size, tick_angle):
+        t.left(tick_angle)
         t.penup()
-        t.fd(ticksize / 2)
+        t.fd(tick_size / 2)
         t.pendown()
-        t.back(ticksize)
+        t.back(tick_size)
         t.penup()
-        t.fd(ticksize / 2)
+        t.fd(tick_size / 2)
         t.pendown()
-        t.right(90)
+        t.right(tick_angle)
 
-    def edge(self, t, d):
-        ticksize = d/8
+
+    def hash_mark(self, t, d, stepcount, tick_size):
+        span = d / stepcount * 8
+        hash_angle = atan(tick_size / span) * 180 / pi
+        hash_length = sqrt(tick_size * tick_size + span * span)
+        t.penup()
+        t.left(90)
+        t.fd(tick_size / 2)
+        t.right(hash_angle + 90)
+        t.pendown()
+        t.fd(hash_length)
+        t.penup()
+        t.back(hash_length)
+        t.left(hash_angle + 90)
+        t.back(tick_size / 2)
+        t.right(90)
+        t.pendown()
+
+    def edge(self, t, d, tickcount):
+        is_hashed = tickcount == 5
+        tick_angle = 90
+        if tickcount in (3, 4):
+            tick_angle += 10 * (1 - 2*(tickcount % 2))
+        tickcount = min(tickcount, 4)
+        ticksize = d/5
         stepcount = 12
-        tickcount = 4
         for i in range(stepcount):
+            if i == 2 and is_hashed:
+                self.hash_mark(t, d, stepcount, ticksize)
             parity_match = i % 2 != tickcount % 2
             distance_from_centre = abs(stepcount/2 - i)
             close_enough = distance_from_centre < tickcount 
             if parity_match and close_enough:
-                self.tick(t, ticksize)
+                self.tick(t, ticksize, tick_angle)
             t.fd(d / stepcount)
 
-    def hexagon(self, height, skip_headings):
+    def hexagon(self, height, tickcount, skip_headings):
         """ Draw a hexagon of the given height, centred at the current 
         position. 
         """
@@ -87,7 +115,7 @@ class GameBoard:
         t.left(120)
         t.pendown()
         for _ in range(6):
-            self.edge(t, d)
+            self.edge(t, d, tickcount)
             t.right(60)
             if t.heading() not in skip_headings:
                 t.fd(d)
@@ -102,7 +130,7 @@ class GameBoard:
 
 if __name__ == '__live_coding__':
     global __live_turtle__
-    GameBoard(__live_turtle__).draw()
+    Board(__live_turtle__).draw()
     
 elif __name__ == '__main__':
     from Tkinter import mainloop
@@ -110,6 +138,6 @@ elif __name__ == '__main__':
     
     t = Turtle()
     t.tracer(1000000) # disable animation
-    GameBoard(t).draw()
+    Board(t).draw()
     t.tracer(1)
     mainloop()
