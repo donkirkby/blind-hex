@@ -1,7 +1,7 @@
 from math import atan, pi, sin, sqrt
 
 #echo on
-#echo width 60
+#echo width 80
 #echo scroll 50
 #echo turtle
 
@@ -67,6 +67,19 @@ class Board:
         t.fd(tick_size / 2)
         t.pendown()
         t.right(tick_angle)
+        
+    def curved_tick(self, t, tick_size):
+        t.left(90)
+        t.penup()
+        radius = -tick_size*2/3
+        angle = 90.0
+        t.circle(radius, -angle/2)
+        t.pendown()
+        t.circle(radius, angle)
+        t.penup()
+        t.circle(radius, -angle/2)
+        t.pendown()
+        t.right(90)
 
 
     def hash_mark(self, t, d, stepcount, tick_size):
@@ -90,7 +103,7 @@ class Board:
         is_hashed = tickcount == 5
         tick_angle = 90
         if tickcount in (3, 4):
-            tick_angle += 10 * (1 - 2*(tickcount % 2))
+            tick_angle += 0 * (1 - 2*(tickcount % 2))
         tickcount = min(tickcount, 4)
         ticksize = d/5
         stepcount = 12
@@ -101,7 +114,10 @@ class Board:
             distance_from_centre = abs(stepcount/2 - i)
             close_enough = distance_from_centre < tickcount 
             if parity_match and close_enough:
-                self.tick(t, ticksize, tick_angle)
+                if tickcount == 3:
+                    self.curved_tick(t, ticksize)
+                else:
+                    self.tick(t, ticksize, tick_angle)
             t.fd(d / stepcount)
 
     def hexagon(self, height, tickcount, skip_headings):
