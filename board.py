@@ -1,7 +1,7 @@
 from math import atan, pi, sin, sqrt
 
 #echo on
-#echo width 80
+#echo width 45
 #echo scroll 50
 #echo turtle
 
@@ -9,7 +9,7 @@ class Board:
     def __init__(self, t):
         self.t = t
         self.scale = 1.0
-    
+
     def draw(self):
         t = self.t
         count = 11
@@ -55,8 +55,41 @@ class Board:
             t.fd(2*d)
             t.right(30)
             t.pendown()
+        self.write_letters(t, count, d)
 
-
+    def write_letters(self, t, count, d):
+        t.penup()
+        t.goto(0, 0)
+        t.setheading(0)
+        text_font = "Courier", int(d / 2), "normal"
+        t.right(30)
+        t.fd((count / 2 + 1) * d)
+        t.left(120)
+        t.fd(d * 2 / 3)
+        for _ in range(count - 1):
+            t.write("x", font=text_font, align="center")
+            t.fd(d)
+        
+        t.fd(d)
+        t.left(120)
+        t.fd(2 * d)
+        for _ in range(count - 1):
+            t.write("o", font=text_font, align="center")
+            t.fd(d)
+        
+        t.left(60)
+        t.fd(d)
+        for _ in range(count - 1):
+            t.write("x", font=text_font, align="center")
+            t.fd(d)
+        
+        t.fd(d)
+        t.left(120)
+        t.fd(2 * d)
+        for _ in range(count - 1):
+            t.write("o", font=text_font, align="center")
+            t.fd(d)
+        
     def tick(self, t, tick_size, tick_angle):
         t.left(tick_angle)
         t.penup()
