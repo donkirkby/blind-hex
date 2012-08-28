@@ -5,24 +5,36 @@ class CairoTurtle(TNavigator, TPen):
     class _Screen(object):
         def __init__(self, canvas):
             self.cv = canvas
+            self._path = None
             
     def __init__(self, canvas, frame):
+        self._path = None
+        self.screen = None
         TNavigator.__init__(self)
         TPen.__init__(self)
         self.screen = CairoTurtle._Screen(canvas)
         self.frame = frame
         self.__xoff = self.window_width()/2
         self.__yoff = self.window_height()/2
+        
+    def _convert_position(self, position):
+        return (position[0] + self.__xoff, position[1] - self.__yoff)
     
     def _goto(self, end):
-        start = self._position
-        if self._drawing:
-            self.screen.cv.line(start[0] + self.__xoff, 
-                                start[1] - self.__yoff, 
-                                end[0] + self.__xoff, 
-                                end[1] - self.__yoff)
+        if self._drawing and self.screen:
+            if self._path is None:
+                self._path = self.screen.cv.beginPath()
+                self._path.moveTo(*self._convert_position(self._position))
+            self._path.lineTo(*self._convert_position(end))
         self._position = end
     
+    def _newLine(self, usePos=True):
+        """Closes current line item and starts a new one.
+        """
+        if self._path is not None:
+            self.screen.cv.drawPath(self._path)
+            self._path = None
+        
     def window_width(self):
         return self.frame._width
 

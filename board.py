@@ -133,10 +133,14 @@ class Board:
         t.pendown()
 
     def edge(self, t, d, tickcount):
+        slant_angle = 30
+        curved_ticks = []
+        slanted_ticks = []
+        
         is_hashed = tickcount == 5
         tick_angle = 90
-        if tickcount in (3, 4):
-            tick_angle += 0 * (1 - 2*(tickcount % 2))
+        if tickcount in slanted_ticks:
+            tick_angle += slant_angle * (1 - 2*(tickcount % 2))
         tickcount = min(tickcount, 4)
         ticksize = d/5
         stepcount = 12
@@ -147,7 +151,7 @@ class Board:
             distance_from_centre = abs(stepcount/2 - i)
             close_enough = distance_from_centre < tickcount 
             if parity_match and close_enough:
-                if tickcount == 3:
+                if tickcount in curved_ticks:
                     self.curved_tick(t, ticksize)
                 else:
                     self.tick(t, ticksize, tick_angle)
