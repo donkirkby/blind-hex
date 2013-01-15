@@ -1,10 +1,5 @@
 from math import atan, pi, sin, sqrt
 
-#echo on
-#echo width 45
-#echo scroll 50
-#echo turtle
-
 class Board:
     def __init__(self, t):
         self.t = t
@@ -135,7 +130,7 @@ class Board:
     def edge(self, t, d, tickcount):
         slant_angle = 30
         curved_ticks = []
-        slanted_ticks = []
+        slanted_ticks = [3]
         
         is_hashed = tickcount == 5
         tick_angle = 90
