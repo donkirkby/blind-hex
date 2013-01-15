@@ -75,4 +75,4 @@ top to the bottom of the board.
 [1]: http://www.boardgamegeek.com/boardgame/4112/hex
 [2]: http://boardgamegeek.com/boardgame/7555/nibelungenlied
 [4]: http://creativecommons.org/licenses/by-sa/3.0/
-[5]: http://github.com/downloads/donkirkby/blind-hex/blind-hex.pdf
+[5]: https://github.com/donkirkby/blind-hex/blob/master/blind-hex.pdf?raw=true
