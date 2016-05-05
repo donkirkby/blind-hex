@@ -1,4 +1,6 @@
 from math import atan, pi, sin, sqrt
+import turtle
+
 
 class Board:
     def __init__(self, t):
@@ -176,16 +178,8 @@ class Board:
         t.back(d)
         t.pendown()
 
-if __name__ == '__live_coding__':
-    global __live_turtle__
-    Board(__live_turtle__).draw()
-    
-elif __name__ == '__main__':
-    from Tkinter import mainloop
-    from turtle import Turtle
-    
-    t = Turtle()
-    t.tracer(1000000) # disable animation
-    Board(t).draw()
-    t.tracer(1)
-    mainloop()
+turtle.tracer(1000000)  # disable animation
+Board(turtle).draw()
+turtle.tracer(1)
+turtle.hideturtle()
+turtle.mainloop()
