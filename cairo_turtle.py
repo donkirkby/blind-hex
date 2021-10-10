@@ -1,73 +1,139 @@
 from turtle import TNavigator, TPen
-from argparse import ArgumentError
+
 
 class CairoTurtle(TNavigator, TPen):
     """ Helper class to include turtle graphics within a PDF document. """
-    
+
     class _Screen(object):
-        def __init__(self, canvas):
-            self.cv = canvas
-            
-    def __init__(self, canvas, frame):
+        def __init__(self, drawing, width, height):
+            self.cv = drawing
+            self._window_width = width
+            self._window_height = height
+
+        def window_width(self):
+            return self._window_width
+
+        def window_height(self):
+            return self._window_height
+
+    def __init__(self, canvas, frame=None, width=None, height=None):
+        if width is None:
+            # noinspection PyProtectedMember
+            width = frame._width
+        if height is None:
+            # noinspection PyProtectedMember
+            height = frame._height
+        self._path = None
+        self._lines_to_draw = None
         self.screen = None
+
+        # Set base class fields to avoid IDE warnings.
+        self._position = self._drawing = self._pensize = None
+        self._pencolor = self._fillcolor = None
         TNavigator.__init__(self)
         TPen.__init__(self)
-        canvas.setLineCap(1) # Round
-        self.screen = CairoTurtle._Screen(canvas)
-        self.frame = frame
+        canvas.setLineCap(1)  # Round
+        self.screen = CairoTurtle._Screen(canvas, width, height)
         self.__xoff = self.window_width()/2
-        self.__yoff = self.window_height()/2
-        
+        self.__yoff = -self.window_height()/2
+
     def _convert_position(self, position):
-        return (position[0] + self.__xoff, position[1] - self.__yoff)
-    
+        return position[0] + self.__xoff, position[1] - self.__yoff
+
     def _goto(self, end):
-        if self._drawing and self.screen:
-            if self._pencolor:
-                self.screen.cv.setStrokeColor(self._pencolor)
-            if self._pensize:
-                self.screen.cv.setLineWidth(self._pensize)
+        if self.screen:
             x1, y1 = self._convert_position(self._position)
             x2, y2 = self._convert_position(end)
-            self.screen.cv.line(x1, y1, x2, y2)
+            if self._drawing:
+                pencolor = self._pencolor or 0
+                pensize = self._pensize or 0
+                # May draw line twice when filling, but it makes sure that we
+                # still draw line when caller doesn't call end_fill().
+                self._draw_line(x1, y1, x2, y2, pencolor, pensize)
+                if self._lines_to_draw is not None:
+                    self._lines_to_draw.append((x1,
+                                                y1,
+                                                x2,
+                                                y2,
+                                                pencolor,
+                                                pensize))
+            if self._path is not None:
+                self._path.lineTo(x2, y2)
         self._position = end
-    
+
+    def _draw_line(self, x1, y1, x2, y2, pencolor, pensize):
+        self.screen.cv.setStrokeColor(pencolor)
+        self.screen.cv.setLineWidth(pensize)
+        self.screen.cv.line(x1, y1, x2, y2)
+
+    def begin_fill(self):
+        self.fill(True)
+
+    def end_fill(self):
+        self.fill(False)
+
+    def _flush_lines(self):
+        if self._lines_to_draw:
+            for x1, y1, x2, y2, pencolor, pensize in self._lines_to_draw:
+                self._draw_line(x1, y1, x2, y2, pencolor, pensize)
+
+    def fill(self, flag=None):
+        if flag is None:
+            return self._path is not None
+        if self._path:  # TODO: and len(self._path) > 2:
+            if self._fillcolor:
+                self.screen.cv.setFillColor(self._fillcolor)
+            self.screen.cv.drawPath(self._path, stroke=0, fill=1)
+        self._flush_lines()
+        if not flag:
+            self._path = None
+            self._lines_to_draw = None
+        else:
+            self._path = self.screen.cv.beginPath()
+            self._path.moveTo(*self._convert_position(self._position))
+            self._lines_to_draw = []
+
     def window_width(self):
-        return self.frame._width
+        return self.screen.window_width()
 
     def window_height(self):
-        return self.frame._height
+        return self.screen.window_height()
 
-    def write(self, arg, move=False, align="left", font=("Helvetica", 8, "normal")):
+    def write(self,
+              arg,
+              move=False,
+              align="left",
+              font=("Helvetica", 8, "normal")):
         if move:
-            raise ArgumentError('move', 'Parameter is not supported.')
-        fontName = font[0]
+            raise ValueError('move', 'Parameter is not supported.')
+        font_name = font[0]
         is_style_added = False
         for style in font[2].split():
             if style != 'normal':
                 if not is_style_added:
-                    fontName += '-'
+                    font_name += '-'
                     is_style_added = True
-                fontName += style.capitalize()
-        
+                font_name += style.capitalize()
+
         x = self.xcor() + self.__xoff
         y = self.ycor() - self.__yoff
         y += font[1] * 0.45
-        self.screen.cv.setFont(fontName, font[1])
+        self.screen.cv.setFont(font_name, font[1])
         if align == 'left':
-            self.screen.cv.drawString(x, 
+            self.screen.cv.drawString(x,
                                       y,
                                       str(arg))
         elif align == 'center':
-            self.screen.cv.drawCentredString(x, 
+            self.screen.cv.drawCentredString(x,
                                              y,
                                              str(arg))
         elif align == 'right':
-            self.screen.cv.drawRightString(x, 
+            self.screen.cv.drawRightString(x,
                                            y,
                                            str(arg))
 
-    def _colorstr(self, color):
+    @staticmethod
+    def _colorstr(color):
         """Return color string corresponding to args.
 
         Argument may be a string or a tuple of three
@@ -83,15 +149,16 @@ class CairoTurtle(TNavigator, TPen):
             return color_map.get(color.lower(), color)
         try:
             r, g, b = color
-        except:
+        except ValueError:
             return '#000000'
         r, g, b = [round(255.0*x) for x in (r, g, b)]
         if not ((0 <= r <= 255) and (0 <= g <= 255) and (0 <= b <= 255)):
             return '#000000'
         return "#%02x%02x%02x" % (r, g, b)
 
-#Normally, Tkinter will look up these colour names for you, but we don't
-#actually launch Tkinter when we're analysing code.
+
+# Normally, Tkinter will look up these colour names for you, but we don't
+# actually launch Tkinter when we're analysing code.
 color_map = {
     'alice blue': '#f0f8ff',
     'aliceblue': '#f0f8ff',
