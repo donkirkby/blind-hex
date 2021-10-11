@@ -58,7 +58,7 @@ class SvgTurtle(TNavigator, TPen):
 
         # Set base class fields to avoid IDE warnings.
         self._position = self._drawing = self._pensize = None
-        self._pencolor = self._fillcolor = self._newLine = None
+        self._pencolor = self._fillcolor = None
         TNavigator.__init__(self)
         TPen.__init__(self)
         self.screen = self._Screen(drawing, width, height)
@@ -120,6 +120,7 @@ class SvgTurtle(TNavigator, TPen):
 
     def to_svg(self) -> str:
         self._path = None  # Cancel incomplete fill.
+        # noinspection PyUnresolvedReferences
         self._newLine()
         self._flush_lines()
         self._draw_stamps()
