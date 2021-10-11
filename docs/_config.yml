@@ -1,0 +1,7 @@
+remote_theme: chrisrhymes/bulma-clean-theme
+title: Blind Hex
+google_analytics: UA-4644630-2
+
+defaults:
+  - scope:
+      path: ""
