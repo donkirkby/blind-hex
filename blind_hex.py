@@ -3,29 +3,17 @@ import re
 
 from reportlab.lib import pagesizes
 from reportlab.platypus import SimpleDocTemplate, Paragraph
-from reportlab.platypus.flowables import Flowable, PageBreak, Spacer
+from reportlab.platypus.flowables import PageBreak, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 
 from board import Board
-from cairo_turtle import CairoTurtle
+from pdf_turtle import PdfTurtle
 
 
-class GameBoard(Flowable):
-    def __init__(self, scale=1.0):
-        super().__init__()
-        self.scale = scale
-
-    # noinspection PyPep8Naming
-    def wrap(self, availWidth, availHeight):
-        self.width = availWidth
-        self.height = availHeight
-        return self.width, self.height
-        
+class GameBoard(PdfTurtle):
     def draw(self):
-        # noinspection PyUnresolvedReferences
-        t = CairoTurtle(self.canv, self._frame)
-        board = Board(t)
+        board = Board(self)
         board.draw()
 
 
@@ -94,7 +82,10 @@ def go():
             replacement += block
             story[i*2+1] = Paragraph(replacement, p.style)
     story.append(PageBreak())
-    story.append(GameBoard())
+    scale = 0.9825
+    board = GameBoard.create(doc.width * scale, doc.height * scale)
+    board.draw()
+    story.append(board.to_reportlab())
     doc.build(story, onFirstPage=first_page)
 
 

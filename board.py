@@ -134,7 +134,7 @@ class Board:
         """ Draw a hexagon of the given height, centred at the current 
         position. 
         """
-        d = height // (2*sin(60*pi/180))
+        d = height / (2*sin(60*pi/180))
         t = self.t
         t.penup()
         t.fd(d)

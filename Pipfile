@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 reportlab = "*"
+svgwrite = "*"
+svglib = "*"
 
 [dev-packages]
 
