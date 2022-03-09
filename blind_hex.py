@@ -91,4 +91,4 @@ def go():
 
 go()
 
-call(["evince", "blind-hex.pdf"])
+# call(["evince", "blind-hex.pdf"])
