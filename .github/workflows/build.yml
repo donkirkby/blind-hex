@@ -27,4 +27,4 @@ jobs:
           python -m pipenv install
       - name: Run script to check for crashes
         run: |
-          python blind_hex.py
+          python -m pipenv run python blind_hex.py
