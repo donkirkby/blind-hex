@@ -208,10 +208,10 @@
         },
         "svglib": {
             "hashes": [
-                "sha256:a38998b95d1bb99564dc9dffaf15e4e9453761f2790d2dd4147a4ad5fbac1078"
+                "sha256:14680e20c405a5184ffbf774b3b92f48c12a61b6d6320fec0fee1b2504398793"
             ],
             "index": "pypi",
-            "version": "==1.3.0"
+            "version": "==1.4.0"
         },
         "svgwrite": {
             "hashes": [
