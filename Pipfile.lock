@@ -184,16 +184,19 @@
         },
         "reportlab": {
             "hashes": [
-                "sha256:1344dbe779b9049a1888105503837d0e5b62163bf5c6b33bd1fbe84bad484f50"
+                "sha256:069aa35da7c882921f419f6e26327e14dac1d9d0adeb40b584cdadd974d99fc0",
+                "sha256:ec062675202eb76f6100ed44da64f38ed3c7feb5016cf4fe7f17ce35423ab14a"
             ],
             "index": "pypi",
-            "version": "==4.0.5"
+            "markers": "python_version >= '3.7' and python_version < '4'",
+            "version": "==4.0.6"
         },
         "svglib": {
             "hashes": [
                 "sha256:3ae765d3a9409ee60c0fb4d24c2deb6a80617aa927054f5bcd7fc98f0695e587"
             ],
             "index": "pypi",
+            "markers": "python_version >= '3.7'",
             "version": "==1.5.1"
         },
         "svgwrite": {
@@ -202,6 +205,7 @@
                 "sha256:bb6b2b5450f1edbfa597d924f9ac2dd099e625562e492021d7dd614f65f8a22d"
             ],
             "index": "pypi",
+            "markers": "python_version >= '3.6'",
             "version": "==1.4.3"
         },
         "tinycss2": {
